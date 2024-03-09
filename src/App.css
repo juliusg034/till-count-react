@@ -1,0 +1,19 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+heading > h1 {
+  color: #3b8132;
+}
+
+heading > h4, h1{
+  text-align: center;
+}
+
+.description {
+  color: rgb(201, 84, 84);
+  text-decoration: underline;
+}
+
