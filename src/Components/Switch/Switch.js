@@ -3,7 +3,7 @@ import './Switch.css';
 
 function Switch ({ isOn, handleToggle }) {
   return (
-    <>
+    <div id='switch'>
       <input
         checked={isOn}
         onChange={handleToggle}
@@ -19,7 +19,7 @@ function Switch ({ isOn, handleToggle }) {
       >
         <span className={`react-switch-button`} />
       </label>
-    </>
+    </div>
   );
 };
 
