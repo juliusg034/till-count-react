@@ -1,0 +1,10 @@
+.input-field {
+  background-color: black;
+  padding: 2px;
+}
+
+.input-field > input {
+  width: 100px;
+  border-radius: 15px;
+  background-color: gray;
+}
