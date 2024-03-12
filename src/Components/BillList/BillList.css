@@ -1,0 +1,44 @@
+.bill-list {
+  background-color: green;
+  border-radius: 15px;
+  width: 168px;
+  height: 420px;
+  position: relative;
+  padding: 15px;
+}
+.top {
+  margin-bottom: 20px;
+}
+#refresh {
+  position: absolute;
+  top: -5px;
+  left: -10px;
+  rotate: 95deg;
+  color: black;
+  z-index: 10;
+  font-size: 30px;
+}
+
+#white {
+  color: white;
+}
+
+.bill-list h5 {
+  color: black;
+  margin: 3px 0 3px 0;
+  padding-left: 25px;
+}
+
+.bill-list p {
+  margin: 3px 0 3px 0;
+  font-size: 18px;
+  padding-left: 45px;
+}
+
+.line {
+  position: absolute;
+  left: 40px;
+  width: 3px;
+  height: 140px;
+  background-color: black;
+}
