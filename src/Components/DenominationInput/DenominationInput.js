@@ -6,7 +6,7 @@ function DenominationInput ({label, id, denomination}) {
   return (
     <div class='input-field'>
       <label for="number">{label}</label>
-      <input type='number' inputmode='decimal' parttern='[0-9]' class='bill-input' id={id} data-denomination={denomination}/>
+      <input type='number' inputmode='decimal' parttern='[0-9]' class='bill-input' id={id} data-denomination={denomination} autoComplete='off'/>
     </div>
   )
 }

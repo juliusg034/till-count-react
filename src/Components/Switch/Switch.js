@@ -13,7 +13,7 @@ function Switch ({ isOn, handleToggle }) {
       />
 
       <label
-        style={{ background: isOn && '#06D6A0'}}
+        style={{ background: isOn && 'green'}}
         className="react-switch-label"
         htmlFor={`react-switch-new`}
       >

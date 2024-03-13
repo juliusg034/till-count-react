@@ -1,10 +1,7 @@
-import React, { useState } from 'react';
 import './App.css';
-import Switch from './Components/Switch/Switch';
 import InputForm from './Components/InputForm/InputForm';
 
 function App() {
-  const [value, setValue] = useState(false)
   return (
     <div className="App">
       <heading>
@@ -17,7 +14,6 @@ function App() {
 
       <InputForm/>
       
-      <Switch isOn={value} handleToggle={() => setValue(!value)}/> 
     </div>
   );
 }

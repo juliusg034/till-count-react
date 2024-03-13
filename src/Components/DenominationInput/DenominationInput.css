@@ -8,3 +8,9 @@
   border-radius: 15px;
   background-color: gray;
 }
+
+@media screen and (max-width: 550px){
+  .input-field > input {
+    width: 70px;
+  }
+} 
