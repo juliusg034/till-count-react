@@ -4,21 +4,20 @@ import Switch from '../Switch/Switch.js';
 import React, { useState } from 'react';
 import './InputForm.css';
 
-function InputForm () {
+function InputForm ({ setDescription }) {
   const [value, setValue] = useState(false)
-  if(value){
-    const description = document.querySelector(".description");
-    description.innerHTML = "number of bills";
-  } else {
-    const description = document.querySelector(".description");
-    description.innerHTML = "value of bills";
-  }
+  
   const [total, setTotal] = useState("$$$")
   const [depositTotal, setDepositTotal] = useState("$$$")
   const [endingTotal, setEndingTotal] = useState('$$$');
   const [deposit, setDeposit] = useState({100: 0, 50: 0, 20:0, 10:0, 5:0, 1:0});
   const [ending, setEnd] = useState({100: 0, 50: 0, 20:0, 10:0, 5:0, 1:0, 0.25:0, 0.10:0, 0.05:0, 0.01:0});
 
+  if(value){
+    setDescription("number of bills")
+    } else {
+      setDescription("value of bills")
+    }
 
   const handleSubmit = () => {
     function depositAmount(deposit, denomination, amount){
