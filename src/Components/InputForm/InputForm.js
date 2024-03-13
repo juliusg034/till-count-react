@@ -6,7 +6,13 @@ import './InputForm.css';
 
 function InputForm () {
   const [value, setValue] = useState(false)
-
+  if(value){
+    const description = document.querySelector(".description");
+    description.innerHTML = "number of bills";
+  } else {
+    const description = document.querySelector(".description");
+    description.innerHTML = "value of bills";
+  }
   const [total, setTotal] = useState("$$$")
   const [depositTotal, setDepositTotal] = useState("$$$")
   const [endingTotal, setEndingTotal] = useState('$$$');

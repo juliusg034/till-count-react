@@ -7,7 +7,7 @@ function App() {
       <heading>
         <h1>DEPOSIT CALCULATOR</h1>
         <h4>
-          Enter the <span class="description">number of bills</span> you have for each denomination <br/>
+          Enter the <span class="description">value of bills</span> you have for each denomination <br/>
           then click the refresh button to see your total deposit
         </h4>
       </heading>
