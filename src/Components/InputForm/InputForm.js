@@ -146,7 +146,7 @@ function InputForm ({ setDescription }) {
           <BillList handleSubmit={handleSubmit} values={ending} deposit={deposit} total={total} endingTotal={endingTotal} depositTotal={depositTotal} addClass={addClass}/>
           <div class="setting">
             <Switch isOn={value} handleToggle={() => setValue(!value)}/>
-            <p class='switch-text'>quantity of bills</p>
+            <p class='switch-text'>toggle between value of bills to number of bills</p>
           </div>
         </div>
       </div>
