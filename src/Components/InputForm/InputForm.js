@@ -12,6 +12,7 @@ function InputForm ({ setDescription }) {
   const [endingTotal, setEndingTotal] = useState('$$$');
   const [deposit, setDeposit] = useState({100: 0, 50: 0, 20:0, 10:0, 5:0, 1:0});
   const [ending, setEnd] = useState({100: 0, 50: 0, 20:0, 10:0, 5:0, 1:0, 0.25:0, 0.10:0, 0.05:0, 0.01:0});
+  const [addClass, setAddClass] = useState(false);
 
   if(value){
     setDescription("number of bills")
@@ -48,38 +49,40 @@ function InputForm ({ setDescription }) {
       const pennies = parseFloat(document.getElementById('pennies').value);
       const setTill = parseFloat(document.getElementById('base').value);
 
-      let amountHundreds;
-      let amountTwenties;
-      let amountFifties;
-      let amountTens;
-      let amountFives;
-      let amountOnes;
       if(!value){
-        let totalsum = hundreds + fifties + twenties + tens + fives + ones + quarters + dimes + nickels + pennies; 
+        const totalsum = hundreds + fifties + twenties + tens + fives + ones + quarters + dimes + nickels + pennies; 
         let deposit = {amount: totalsum - setTill};
-        amountFives = fives / 5
-        amountTens = tens / 10
-        amountTwenties = twenties / 20
-        amountFifties = fifties / 50
-        amountHundreds = hundreds / 100
-        amountOnes = ones / 1       
-        let depositHundreds = depositAmount(deposit, 100, amountHundreds);
-        let depositFifties = depositAmount(deposit, 50, amountFifties);
-        let depositTwenties = depositAmount(deposit, 20, amountTwenties);
-        let depositTens = depositAmount(deposit, 10, amountTens);
-        let depositFives = depositAmount(deposit, 5, amountFives);
-        let depositOnes = depositAmount(deposit, 1, amountOnes);  
+        const amountFives = fives / 5
+        const amountTens = tens / 10
+        const amountTwenties = twenties / 20
+        const amountFifties = fifties / 50
+        const amountHundreds = hundreds / 100
+        const amountOnes = ones / 1       
+
+        const depositHundreds = depositAmount(deposit, 100, amountHundreds);
+        const depositFifties = depositAmount(deposit, 50, amountFifties);
+        const depositTwenties = depositAmount(deposit, 20, amountTwenties);
+        const depositTens = depositAmount(deposit, 10, amountTens);
+        const depositFives = depositAmount(deposit, 5, amountFives);
+        const depositOnes = depositAmount(deposit, 1, amountOnes);  
+
+        const endingHundreds = amountHundreds-depositHundreds;
+        const endingFifties = amountFifties-depositFifties;
+        const endingTwenties = amountTwenties-depositTwenties;
+        const endingTens = amountTens-depositTens;
+        const endingFives = amountFives-depositFives;
+        const endingOnes = amountOnes-depositOnes;
 
         setDeposit({100:depositHundreds, 50: depositFifties, 20:depositTwenties, 10:depositTens, 5:depositFives, 1:depositOnes})
-        setEnd({100:amountHundreds-depositHundreds, 50: amountFifties-depositFifties, 20:amountTwenties-depositTwenties, 10:amountTens-depositTens, 5:amountFives-depositFives, 1:amountOnes-depositOnes, 0.25:quarters, 0.10:dimes, 0.05:nickels, 0.01:pennies})
+        setEnd({100:endingHundreds, 50:endingFifties, 20:endingTwenties, 10:endingTens, 5:endingFives, 1:endingOnes, 0.25:quarters, 0.10:dimes, 0.05:nickels, 0.01:pennies})
         setTotal(totalsum)
-        setDepositTotal(Math.round(totalsum)- 300)
-        setEndingTotal(((ending[100] * 100)+(ending[50]* 50)+(ending[20]*20)+(ending[10]*10)+(ending[5]*5)+(ending[1])+quarters+dimes+nickels+pennies))
+        setDepositTotal(Math.round(totalsum)- setTill)
+        setEndingTotal(endingHundreds*100+endingFifties*50+endingTwenties*20+endingTens*10+endingFives*5+endingOnes+quarters+dimes+nickels+pennies)
 
-        console.log(depositTwenties, depositTens)
+        console.log(ending)
         console.log(endingTotal)
       } else {
-        let totalsum = hundreds*100 + fifties*50 + twenties*20 + tens*10 + fives*5 + ones + quarters + dimes + nickels + pennies; 
+        const totalsum = hundreds*100 + fifties*50 + twenties*20 + tens*10 + fives*5 + ones + quarters + dimes + nickels + pennies; 
         let deposit = {amount: totalsum - setTill};
         let depositHundreds = depositAmount(deposit, 100, hundreds);
         let depositFifties = depositAmount(deposit, 50, fifties);
@@ -89,19 +92,31 @@ function InputForm ({ setDescription }) {
         let depositOnes = depositAmount(deposit, 1, ones);  
 
 
-        setDeposit({100:depositHundreds, 50: depositFifties, 20:depositTwenties, 10:depositTens, 5:depositFives, 1:depositOnes})
-        setEnd({100:hundreds-depositHundreds, 50: fifties-depositFifties, 20:twenties-depositTwenties, 10:tens-depositTens, 5:fives-depositFives, 1:ones-depositOnes, 0.25:quarters, 0.10:dimes, 0.05:nickels, 0.01:pennies})
-        setTotal(totalsum)
-        setDepositTotal(Math.round(totalsum)- 300)
-        setEndingTotal(((ending[100]*100)+(ending[50]*50)+(ending[20]*20)+(ending[10]*10)+(ending[5]*5)+(ending[1])+quarters+dimes+nickels+pennies))
+        const endingHundreds = hundreds-depositHundreds;
+        const endingFifties = fifties-depositFifties;
+        const endingTwenties = twenties-depositTwenties;
+        const endingTens = tens-depositTens;
+        const endingFives = fives-depositFives;
+        const endingOnes = ones-depositOnes;
 
+        setTotal(totalsum)
+        setDeposit({100:depositHundreds, 50: depositFifties, 20:depositTwenties, 10:depositTens, 5:depositFives, 1:depositOnes})
+        setDepositTotal(Math.round(totalsum)- setTill)
+        setEnd({100:hundreds-depositHundreds, 50: fifties-depositFifties, 20:twenties-depositTwenties, 10:tens-depositTens, 5:fives-depositFives, 1:ones-depositOnes, 0.25:quarters, 0.10:dimes, 0.05:nickels, 0.01:pennies})
+        setEndingTotal(endingHundreds*100+endingFifties*50+endingTwenties*20+endingTens*10+endingFives*5+endingOnes+quarters+dimes+nickels+pennies)
+
+        console.log(ending)
         console.log(endingTotal)
-        console.log(depositTotal)        
       }
 
 
 
     }
+
+    setAddClass(true);
+    setTimeout(() => {
+      setAddClass(false);
+    }, 1000);
 
     getValues();
     
@@ -128,7 +143,7 @@ function InputForm ({ setDescription }) {
          
         <div class="right-bills">
           <DenominationInput label={'Base Till $'} id={"base"}/>
-          <BillList handleSubmit={handleSubmit} values={ending} deposit={deposit} total={total} endingTotal={endingTotal} depositTotal={depositTotal} />
+          <BillList handleSubmit={handleSubmit} values={ending} deposit={deposit} total={total} endingTotal={endingTotal} depositTotal={depositTotal} addClass={addClass}/>
           <div class="setting">
             <Switch isOn={value} handleToggle={() => setValue(!value)}/>
             <p class='switch-text'>quantity of bills</p>

@@ -1,12 +1,12 @@
 import './BillList.css';
 
-function BillList ({ handleSubmit, values, deposit, total, endingTotal, depositTotal }) {
+function BillList ({ handleSubmit, values, deposit, total, endingTotal, depositTotal, addClass }) {
 
 
   return (
     <div class="bill-list">
       <div class="top">
-        <i id="refresh" class="fa fa-refresh" onClick={handleSubmit} ></i>
+        <i id="refresh"  className={`fa fa-refresh ${addClass ? 'fa-spin': ''}`} onClick={handleSubmit} ></i>
         <h5 id="white">Total = {total}</h5>
         <h5>Deposit = {depositTotal}</h5>
         <div class="line"></div>
@@ -27,10 +27,10 @@ function BillList ({ handleSubmit, values, deposit, total, endingTotal, depositT
         <p>{values[10]} x $10</p>
         <p>{values[5]} x $5</p>
         <p>{values[1]} x $1</p>
-        <p>{values[0.25]} in quarters</p>
-        <p>{values[0.10]} in dimes</p>
-        <p>{values[0.05]} in nickels</p>
-        <p>{values[0.01]} in pennies</p>
+        <p>{values[0.25]} in 25¢</p>
+        <p>{values[0.10]} in 10¢</p>
+        <p>{values[0.05]} in 5¢</p>
+        <p>{values[0.01]} in 1¢</p>
       </div>
     </div>
   )
