@@ -1,7 +1,7 @@
 .bill-list {
   background-color: green;
   border-radius: 15px;
-  width: 150px;
+  width: 200px;
   height: 580px;
   position: relative;
   padding: 15px;
@@ -13,6 +13,9 @@
 
 .right-bills > .input-field > label {
   width: 80px;
+}
+.right-bills > .input-field {
+  width: 200px;
 }
 
 #refresh {
