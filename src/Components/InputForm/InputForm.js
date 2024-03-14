@@ -76,7 +76,7 @@ function InputForm ({ setDescription }) {
         setDeposit({100:depositHundreds, 50: depositFifties, 20:depositTwenties, 10:depositTens, 5:depositFives, 1:depositOnes})
         setEnd({100:endingHundreds, 50:endingFifties, 20:endingTwenties, 10:endingTens, 5:endingFives, 1:endingOnes, 0.25:quarters, 0.10:dimes, 0.05:nickels, 0.01:pennies})
         setTotal(totalsum)
-        setDepositTotal(Math.round(totalsum)- setTill)
+        setDepositTotal(Math.floor(totalsum)- setTill)
         setEndingTotal(endingHundreds*100+endingFifties*50+endingTwenties*20+endingTens*10+endingFives*5+endingOnes+quarters+dimes+nickels+pennies)
 
         console.log(ending)
@@ -101,7 +101,7 @@ function InputForm ({ setDescription }) {
 
         setTotal(totalsum)
         setDeposit({100:depositHundreds, 50: depositFifties, 20:depositTwenties, 10:depositTens, 5:depositFives, 1:depositOnes})
-        setDepositTotal(Math.round(totalsum)- setTill)
+        setDepositTotal(Math.floor(totalsum)- setTill)
         setEnd({100:hundreds-depositHundreds, 50: fifties-depositFifties, 20:twenties-depositTwenties, 10:tens-depositTens, 5:fives-depositFives, 1:ones-depositOnes, 0.25:quarters, 0.10:dimes, 0.05:nickels, 0.01:pennies})
         setEndingTotal(endingHundreds*100+endingFifties*50+endingTwenties*20+endingTens*10+endingFives*5+endingOnes+quarters+dimes+nickels+pennies)
 
