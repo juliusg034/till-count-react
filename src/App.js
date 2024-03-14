@@ -12,7 +12,8 @@ function App() {
         <h1>DEPOSIT CALCULATOR</h1>
         <h4>
           Enter the <span class="description">{description}</span> you have for each denomination <br/>
-          then click the refresh button to see your total deposit
+          then click the refresh button to see your total deposit.<br/>
+          Always enter the exact value of coins
         </h4>
       </heading>
 

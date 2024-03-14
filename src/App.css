@@ -14,8 +14,9 @@ heading > h4 {
 }
 
 heading > h4, h1{
-  text-align: center;
+  text-align:center
 }
+
 
 .description {
   color: rgb(201, 84, 84);
