@@ -60,6 +60,15 @@
   cursor: pointer;
 }
 
+.value {
+  display: inline-block;
+  width: 20px;
+}
+
+.label {
+  margin-left: 18px;
+}
+
 @media screen and (max-width: 550px) {
   .bill-list p {
     font-size: 16px;

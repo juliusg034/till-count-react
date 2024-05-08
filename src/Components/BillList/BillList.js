@@ -21,16 +21,16 @@ function BillList ({ handleSubmit, values, deposit, total, endingTotal, depositT
         <h5 id="white">Ending Till</h5>
         <h5>Total = {endingTotal}</h5>
         <div class="line"></div>
-        <p>{values[100]*100} in $100</p>
-        <p>{values[50]*50} in $50</p>
-        <p>{values[20]*20} in $20</p>
-        <p>{values[10]*10} in $10</p>
-        <p>{values[5]*5} in $5</p>
-        <p>{values[1]} in $1</p>
-        <p>{values[0.25]} in 25¢</p>
-        <p>{values[0.10]} in 10¢</p>
-        <p>{values[0.05]} in 5¢</p>
-        <p>{values[0.01]} in 1¢</p>
+        <p><span class="value">{values[100]*100}</span> <span class="label">in $100</span></p>
+        <p><span class="value">{values[50]*50}</span> <span class="label">in $50</span></p>
+        <p><span class="value">{values[20]*20}</span> <span class="label">in $20</span></p>
+        <p><span class="value">{values[10]*10}</span> <span class="label">in $10</span></p>
+        <p><span class="value">{values[5]*5}</span> <span class="label">in $5</span></p>
+        <p><span class="value">{values[1]}</span> <span class="label">in $1</span></p>
+        <p><span class="value">{values[0.25]}</span> <span class="label">in 25¢</span></p>
+        <p><span class="value">{values[0.10]}</span> <span class="label">in 10¢</span></p>
+        <p><span class="value">{values[0.05]}</span> <span class="label">in 5¢</span></p>
+        <p><span class="value">{values[0.01]}</span> <span class="label">in 1¢</span></p>
       </div>
     </div>
   )
