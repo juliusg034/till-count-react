@@ -1,70 +1,38 @@
-# Getting Started with Create React App
+# Domino's Cash Handling Assistant
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
+This is a React-based web application designed to simplify end-of-night cash handling for Domino's employees. The tool calculates the expected cash balance, helping to streamline paperwork and improve efficiency in closing procedures. It was made
+because one night severely sleep deprived I had to make sure I used the biggest bills for the deposit while still leaving the set amount usually $300. I just couldn't do the math. It took me about 5 tries before I got it. So, being my lazy self I 
+spent the next week creating a website so that never happened again.
 
-## Available Scripts
+![image](https://github.com/user-attachments/assets/b9feb261-6cfe-422b-b652-7476556d5c30)
 
-In the project directory, you can run:
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Features
+- **Cash Calculation:** Automatically determines how much cash should be left after closing.
+- **Breakdown Summary:** Displays an organized summary of earnings, tips, and deposits.
+- **Efficiency Boost:** Reduces manual errors and speeds up the paperwork process.
+- **User-Friendly Interface:** Simple and intuitive UI for quick data input.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Requirements
+- Node.js (latest stable version)
+- npm or yarn
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Usage
+1. Enter the total cash collected during the shift.
+2. Input in the fields how much of each denomination
+3. The app will calculate the expected cash remaining.
+4. Use the calculated amount to complete end-of-night paperwork more efficiently.
 
-### `npm run build`
+## Technologies Used
+- React
+- JavaScript (ES6+)
+- HTML/CSS
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Future Enhancements
+- Add integration with POS systems
+- Implement user authentication for saved reports
+- Export calculations to PDF or CSV
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
