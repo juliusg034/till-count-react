@@ -1,7 +1,7 @@
 import DenominationInput from "../DenominationInput/DenominationInput.js";
 import BillList from "../BillList/BillList.js";
 import Switch from "../Switch/Switch.js";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./InputForm.css";
 
 function InputForm({ setDescription }) {
@@ -31,6 +31,31 @@ function InputForm({ setDescription }) {
     0.01: 0,
   });
   const [addClass, setAddClass] = useState(false);
+
+const [inputs, setInputs] = useState(() => {
+  const saved = localStorage.getItem("inputs");
+  return saved
+    ? JSON.parse(saved)    // use saved values if they exist
+    : {
+        hundreds: "",
+        fifties: "",
+        twenties: "",
+        tens: "",
+        fives: "",
+        ones: "",
+        quarters: "",
+        dimes: "",
+        nickels: "",
+        pennies: "",
+        base: ""
+      };
+});
+
+  useEffect(() => {
+    console.log("Saving to local storage: ", inputs);
+    localStorage.setItem("inputs", JSON.stringify(inputs));
+  }, [inputs]);
+
 
   if (value) {
     setDescription("number of bills");
@@ -228,24 +253,27 @@ function InputForm({ setDescription }) {
             label={"$100"}
             id={"hundreds"}
             denomination={100}
+            value={inputs.hundreds}
+            onChange={(e) => setInputs({ ...inputs, hundreds: e.target.value })}
           />
-          <DenominationInput label={"$50"} id={"fifties"} denomination={50} />
-          <DenominationInput label={"$20"} id={"twenties"} denomination={20} />
-          <DenominationInput label={"$10"} id={"tens"} denomination={10} />
-          <DenominationInput label={"$5"} id={"fives"} denomination={5} />
-          <DenominationInput label={"$1"} id={"ones"} denomination={1} />
+          <DenominationInput label={"$50"} id={"fifties"} denomination={50} value={inputs.fifties} onChange={(e) => setInputs({ ...inputs, fifties: e.target.value })}/>
+          <DenominationInput label={"$20"} id={"twenties"} denomination={20} value={inputs.twenties}onChange={(e) => setInputs({ ...inputs, twenties: e.target.value })}/>
+          <DenominationInput label={"$10"} id={"tens"} denomination={10} value={inputs.tens}onChange={(e) => setInputs({ ...inputs, tens: e.target.value })}/>
+          <DenominationInput label={"$5"} id={"fives"} denomination={5} value={inputs.fives}onChange={(e) => setInputs({ ...inputs, fives: e.target.value })}/>
+          <DenominationInput label={"$1"} id={"ones"} denomination={1} value={inputs.ones}onChange={(e) => setInputs({ ...inputs, ones: e.target.value })}/>
           <DenominationInput
             label={"25¢"}
             id={"quarters"}
-            denomination={0.25}
+            denomination={0.25} 
+            value={inputs.quarters}onChange={(e) => setInputs({ ...inputs, quarters: e.target.value })}
           />
-          <DenominationInput label={"10¢"} id={"dimes"} denomination={0.1} />
-          <DenominationInput label={"5¢"} id={"nickels"} denomination={0.05} />
-          <DenominationInput label={"1¢"} id={"pennies"} denomination={0.01} />
+          <DenominationInput label={"10¢"} id={"dimes"} denomination={0.1} value={inputs.dimes} onChange={(e) => setInputs({ ...inputs, dimes: e.target.value })}/>
+          <DenominationInput label={"5¢"} id={"nickels"} denomination={0.05} value={inputs.nickels}onChange={(e) => setInputs({ ...inputs, nickels: e.target.value })}/>
+          <DenominationInput label={"1¢"} id={"pennies"} denomination={0.01} value={inputs.pennies}onChange={(e) => setInputs({ ...inputs, pennies: e.target.value })}/>
         </div>
 
         <div class="right-bills">
-          <DenominationInput label={"Base Till $"} id={"base"} />
+          <DenominationInput label={"Base Till $"} id={"base"} value={inputs.base} onChange={(e) => setInputs({ ...inputs, base: e.target.value })}/>
           <BillList
             handleSubmit={handleSubmit}
             values={ending}
