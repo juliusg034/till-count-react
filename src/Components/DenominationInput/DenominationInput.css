@@ -1,10 +1,25 @@
 .input-field {
   background-color: black;
   padding: 2px;
+  overflow: visible;
 }
 
 .input-field > input {
   width: 100px;
   border-radius: 15px;
   background-color: gray;
+}
+
+.input-error {
+  border: 2px solid red;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+  text-align: center;
+  font-weight: bold;
+  margin: 2px 0 0 0;
+  z-index: 9999;
+  padding-top: 2px;
 }
