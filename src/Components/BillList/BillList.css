@@ -2,12 +2,12 @@
   background-color: green;
   border-radius: 15px;
   width: 168px;
-  height: 620px;
+  height: 700px;
   position: relative;
   padding: 15px;
 }
 .top {
-  margin-bottom: 20px;
+  margin-bottom: 70px;
 }
 #refresh {
   position: absolute;
