@@ -2,6 +2,7 @@ import DenominationInput from "../DenominationInput/DenominationInput.js";
 import BillList from "../BillList/BillList.js";
 import './InputForm.css';
 import React, { useState , useEffect} from "react";
+import * as calc from "./calc.js";
 
 
 
@@ -10,25 +11,64 @@ import React, { useState , useEffect} from "react";
 function InputForm () {
   
   const [errors, setErrors] = useState({});
+  const [spin, setSpin] = useState(false);
 
   // Initialize state with saved values from localStorage or default values
-  const[inputs, setInputs] = useState(() => {
-    const saved = localStorage.getItem("inputs");
+  const [inputs, setInputs] = useState(() => {
+  const saved = localStorage.getItem("inputs");
 
-    return saved ? JSON.parse(saved) : {
-      hundreds: "",
-      fifties: "",
-      twenties: "",
-      tens: "",
-      fives: "",
-      ones: "",
-      quarters: "",
-      dimes: "",
-      nickels: "",
-      pennies: ""
-    }
+  const defaultInputs = {
+    hundreds: "",
+    fifties: "",
+    twenties: "",
+    tens: "",
+    fives: "",
+    ones: "",
+    quarters: "",
+    dimes: "",
+    nickels: "",
+    pennies: ""
+  };
+
+  if (!saved) return defaultInputs;
+
+  const parsed = JSON.parse(saved);
+
+  // 🔥 One-time fix: remove old key if it exists
+  if ("base" in parsed) {
+    delete parsed.base;
+    localStorage.setItem("inputs", JSON.stringify(parsed));
+  }
+
+  return parsed;
+});
+  const [depositArray, setDeposit] = useState({
+    total: "$$$",
+    bills: {
+      hundreds: "0",
+      fifties: "0",
+      twenties: "0",
+      tens: "0",
+      fives: "0",
+      ones: "0",
+      },
   })
 
+  const [endingTill, setEndingTill] = useState({
+    total: "$$$",
+    bills: {
+      hundreds: "0",
+      fifties: "0",
+      twenties: "0",
+      tens: "0",
+      fives: "0",
+      ones: "0",
+      quarters: "0",
+      dimes: "0",
+      nickels: "0",
+      pennies: "0"
+      },
+  })
 
   const denominations = {
     hundreds: 100,
@@ -81,6 +121,21 @@ function InputForm () {
   }, [inputs]);
 
 
+  useEffect(() => {
+    if (spin) {
+      // do something when spin is true, e.g. refresh data
+      const sum = calc.getTotal(inputs);
+      let result = calc.getDeposit(inputs, sum, denominations)
+      
+      setDeposit(result.depositArray);
+      setEndingTill(result.endingTill);
+
+      
+    }
+  }, [spin]);
+
+
+
 
 
   return (
@@ -100,7 +155,7 @@ function InputForm () {
         </div>
          
         <div class="right-bills">
-            <BillList/>
+            <BillList inputs={inputs} spin={spin} setSpin={setSpin} depositArray={depositArray} endingTill={endingTill} />
         </div>
       </div>
     </form>
