@@ -26,6 +26,10 @@ function BillList () {
         <p>0 x $10</p>
         <p>0 x $5</p>
         <p>0 x $1</p>
+        <p>0 x $0.25</p>
+        <p>0 x $0.10</p>
+        <p>0 x $0.05</p>
+        <p>0 x $0.01</p>
       </div>
     </div>
   )
