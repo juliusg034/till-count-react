@@ -1,8 +1,9 @@
 .bill-list {
   background-color: green;
   border-radius: 15px;
-  width: 180px;
-  height: 700px;
+  width: 185px;
+  min-height: 700px;
+  height: auto;
   position: relative;
   padding: 15px;
 }
@@ -28,7 +29,7 @@
   font-size: 16px;
   color: black;
   margin: 3px 0 3px 0;
-  padding-left: 25px;
+  padding-left: 20px;
 }
 
 .bill-list p {
@@ -61,4 +62,45 @@
 
 .spin-once {
   animation: spin-once 1s ease-in-out;
+}
+
+
+
+@media (max-width: 600px) {
+  .bill-list {
+    width: 100%;
+    min-width: 150px;
+    min-height: 700px;
+    padding: 10px;
+  }
+
+
+  .bill-list h5 {
+    font-size: 12px;
+  }
+
+  .line-2 {
+    height: 200px;
+  }
+
+  .bill-list p {
+    font-size: 16px;
+  }
+
+  .top p {
+    padding-left: 30px;
+  }
+
+  .line {
+    left: 30px;
+  }
+
+  .line2 {
+    height: 240px;
+    left: 30px;
+  }
+
+  .bottom p{
+    padding-left: 30px;
+  }
 }
