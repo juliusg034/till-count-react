@@ -1,23 +1,21 @@
-import './App.css';
 import React, { useState } from 'react';
+import './App.css';
+import Switch from './Components/Switch/Switch';
 import InputForm from './Components/InputForm/InputForm';
 
 function App() {
-
-  const [description, setDescription] = useState("value of bills");
-
+  const [value, setValue] = useState(false)
   return (
     <div className="App">
       <heading>
         <h1>DEPOSIT CALCULATOR</h1>
         <h4>
-          Enter the <span class="description">{description}</span> you have for each denomination <br/>
-          then click the refresh button to see your total deposit.<br/>
-          Always enter the exact value of coins
+          Enter the <span class="description">value</span> you have for each denomination <br/>
+          then click the refresh button to see your total deposit
         </h4>
       </heading>
 
-      <InputForm setDescription={setDescription}/>
+      <InputForm/>
       
     </div>
   );

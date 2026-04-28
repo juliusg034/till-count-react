@@ -1,296 +1,166 @@
 import DenominationInput from "../DenominationInput/DenominationInput.js";
 import BillList from "../BillList/BillList.js";
-import Switch from "../Switch/Switch.js";
-import React, { useState, useEffect } from "react";
-import "./InputForm.css";
+import './InputForm.css';
+import React, { useState , useEffect} from "react";
+import * as calc from "./calc.js";
 
-function InputForm({ setDescription }) {
-  const [value, setValue] = useState(false);
 
-  const [total, setTotal] = useState("$$$");
-  const [depositTotal, setDepositTotal] = useState("$$$");
-  const [endingTotal, setEndingTotal] = useState("$$$");
-  const [deposit, setDeposit] = useState({
-    100: 0,
-    50: 0,
-    20: 0,
-    10: 0,
-    5: 0,
-    1: 0,
-  });
-  const [ending, setEnd] = useState({
-    100: 0,
-    50: 0,
-    20: 0,
-    10: 0,
-    5: 0,
-    1: 0,
-    0.25: 0,
-    0.1: 0,
-    0.05: 0,
-    0.01: 0,
-  });
-  const [addClass, setAddClass] = useState(false);
 
-const [inputs, setInputs] = useState(() => {
+
+
+function InputForm () {
+  
+  const [errors, setErrors] = useState({});
+  const [spin, setSpin] = useState(false);
+
+  // Initialize state with saved values from localStorage or default values
+  const [inputs, setInputs] = useState(() => {
   const saved = localStorage.getItem("inputs");
-  return saved
-    ? JSON.parse(saved)    // use saved values if they exist
-    : {
-        hundreds: "",
-        fifties: "",
-        twenties: "",
-        tens: "",
-        fives: "",
-        ones: "",
-        quarters: "",
-        dimes: "",
-        nickels: "",
-        pennies: "",
-        base: ""
-      };
-});
 
+  const defaultInputs = {
+    hundreds: "",
+    fifties: "",
+    twenties: "",
+    tens: "",
+    fives: "",
+    ones: "",
+    quarters: "",
+    dimes: "",
+    nickels: "",
+    pennies: ""
+  };
+
+  if (!saved) return defaultInputs;
+
+  const parsed = JSON.parse(saved);
+
+  // 🔥 One-time fix: remove old key if it exists
+  if ("base" in parsed) {
+    delete parsed.base;
+    localStorage.setItem("inputs", JSON.stringify(parsed));
+  }
+
+  return parsed;
+});
+  const [depositArray, setDeposit] = useState({
+    total: "$$$",
+    bills: {
+      hundreds: "0",
+      fifties: "0",
+      twenties: "0",
+      tens: "0",
+      fives: "0",
+      ones: "0",
+      },
+  })
+
+  const [endingTill, setEndingTill] = useState({
+    total: "$$$",
+    bills: {
+      hundreds: "0",
+      fifties: "0",
+      twenties: "0",
+      tens: "0",
+      fives: "0",
+      ones: "0",
+      quarters: "0",
+      dimes: "0",
+      nickels: "0",
+      pennies: "0"
+      },
+  })
+
+  const denominations = {
+    hundreds: 100,
+    fifties: 50,
+    twenties: 20,
+    tens: 10,
+    fives: 5,
+    ones: 1,
+    quarters: 0.25,
+    dimes: 0.10,
+    nickels: 0.05,
+    pennies: 0.01
+  }
+
+
+  function isMultiple(num, denom) {
+    return Math.abs(num / denom - Math.round(num / denom)) < 1e-6;
+  }
+
+  // Update inputs state when any input field changes
+  function handleChange (e) {
+    const name = e.target.id;
+    const value = e.target.value;
+    setInputs(values => ({...values, [name]: value}))
+    
+
+    //validate
+    const denom = denominations[name];
+    let error = null;
+    const num = Number(value);
+    if (value !== "") {
+      if (isNaN(num)) {
+        error = "Please enter a valid number";
+      } else if (num < 0) {
+        error = "Please enter a non-negative number";
+      } else if (isMultiple(num, denom) === false) {
+        error = `Not a multiple of ${denom}`;
+      }
+    }
+
+    setErrors(prev => ({
+      ...prev,
+      [name]: error
+    }))
+  }
+
+  // Save inputs to localStorage whenever they change
   useEffect(() => {
-    console.log("Saving to local storage: ", inputs);
     localStorage.setItem("inputs", JSON.stringify(inputs));
   }, [inputs]);
 
 
-  if (value) {
-    setDescription("number of bills");
-  } else {
-    setDescription("value of bills");
-  }
+  useEffect(() => {
+    if (spin) {
+      // do something when spin is true, e.g. refresh data
+      const sum = calc.getTotal(inputs);
+      let result = calc.getDeposit(inputs, sum, denominations)
+      
+      setDeposit(result.depositArray);
+      setEndingTill(result.endingTill);
 
-  const handleSubmit = () => {
-    function depositAmount(deposit, denomination, amount) {
-      if (amount === 0) {
-        return 0;
-      } else if (deposit.amount === 0) {
-        return 0;
-      } else if (amount > 0) {
-        let maxAmount = Math.floor(deposit.amount / denomination);
-        if (maxAmount > amount) {
-          deposit.amount = deposit.amount - amount * denomination;
-          return amount;
-        } else if (maxAmount <= amount) {
-          deposit.amount = deposit.amount - maxAmount * denomination;
-          return maxAmount;
-        }
-      }
+      
     }
+  }, [spin]);
 
-    function getValues() {
-      const hundreds = parseFloat(document.getElementById("hundreds").value);
-      const fifties = parseFloat(document.getElementById("fifties").value);
-      const twenties = parseFloat(document.getElementById("twenties").value);
-      const tens = parseFloat(document.getElementById("tens").value);
-      const fives = parseFloat(document.getElementById("fives").value);
-      const ones = parseFloat(document.getElementById("ones").value);
-      const quarters = parseFloat(document.getElementById("quarters").value);
-      const dimes = parseFloat(document.getElementById("dimes").value);
-      const nickels = parseFloat(document.getElementById("nickels").value);
-      const pennies = parseFloat(document.getElementById("pennies").value);
-      const setTill = parseFloat(document.getElementById("base").value);
 
-      if (!value) {
-        let totalsum =
-          hundreds +
-          fifties +
-          twenties +
-          tens +
-          fives +
-          ones +
-          quarters +
-          dimes +
-          nickels +
-          pennies;
-        totalsum = totalsum.toFixed(2);
-        let deposit = { amount: totalsum - setTill };
-        const amountFives = fives / 5;
-        const amountTens = tens / 10;
-        const amountTwenties = twenties / 20;
-        const amountFifties = fifties / 50;
-        const amountHundreds = hundreds / 100;
-        const amountOnes = ones / 1;
 
-        const depositHundreds = depositAmount(deposit, 100, amountHundreds);
-        const depositFifties = depositAmount(deposit, 50, amountFifties);
-        const depositTwenties = depositAmount(deposit, 20, amountTwenties);
-        const depositTens = depositAmount(deposit, 10, amountTens);
-        const depositFives = depositAmount(deposit, 5, amountFives);
-        const depositOnes = depositAmount(deposit, 1, amountOnes);
 
-        const endingHundreds = amountHundreds - depositHundreds;
-        const endingFifties = amountFifties - depositFifties;
-        const endingTwenties = amountTwenties - depositTwenties;
-        const endingTens = amountTens - depositTens;
-        const endingFives = amountFives - depositFives;
-        const endingOnes = amountOnes - depositOnes;
-
-        setDeposit({
-          100: depositHundreds,
-          50: depositFifties,
-          20: depositTwenties,
-          10: depositTens,
-          5: depositFives,
-          1: depositOnes,
-        });
-        setEnd({
-          100: endingHundreds,
-          50: endingFifties,
-          20: endingTwenties,
-          10: endingTens,
-          5: endingFives,
-          1: endingOnes,
-          0.25: quarters,
-          0.1: dimes,
-          0.05: nickels,
-          0.01: pennies,
-        });
-        setTotal(totalsum);
-        setDepositTotal(Math.floor(totalsum) - setTill);
-        let ending_total =
-          endingHundreds * 100 +
-          endingFifties * 50 +
-          endingTwenties * 20 +
-          endingTens * 10 +
-          endingFives * 5 +
-          endingOnes +
-          quarters +
-          dimes +
-          nickels +
-          pennies;
-        ending_total = ending_total.toFixed(2);
-        setEndingTotal(ending_total);
-
-        console.log(ending);
-        console.log(endingTotal);
-      } else {
-        let totalsum =
-          hundreds * 100 +
-          fifties * 50 +
-          twenties * 20 +
-          tens * 10 +
-          fives * 5 +
-          ones +
-          quarters +
-          dimes +
-          nickels +
-          pennies;
-        totalsum = totalsum.toFixed(2);
-        let deposit = { amount: totalsum - setTill };
-        let depositHundreds = depositAmount(deposit, 100, hundreds);
-        let depositFifties = depositAmount(deposit, 50, fifties);
-        let depositTwenties = depositAmount(deposit, 20, twenties);
-        let depositTens = depositAmount(deposit, 10, tens);
-        let depositFives = depositAmount(deposit, 5, fives);
-        let depositOnes = depositAmount(deposit, 1, ones);
-
-        const endingHundreds = hundreds - depositHundreds;
-        const endingFifties = fifties - depositFifties;
-        const endingTwenties = twenties - depositTwenties;
-        const endingTens = tens - depositTens;
-        const endingFives = fives - depositFives;
-        const endingOnes = ones - depositOnes;
-
-        setTotal(totalsum);
-        setDeposit({
-          100: depositHundreds,
-          50: depositFifties,
-          20: depositTwenties,
-          10: depositTens,
-          5: depositFives,
-          1: depositOnes,
-        });
-        setDepositTotal(Math.floor(totalsum) - setTill);
-        setEnd({
-          100: hundreds - depositHundreds,
-          50: fifties - depositFifties,
-          20: twenties - depositTwenties,
-          10: tens - depositTens,
-          5: fives - depositFives,
-          1: ones - depositOnes,
-          0.25: quarters,
-          0.1: dimes,
-          0.05: nickels,
-          0.01: pennies,
-        });
-
-        let ending_total =
-          endingHundreds * 100 +
-          endingFifties * 50 +
-          endingTwenties * 20 +
-          endingTens * 10 +
-          endingFives * 5 +
-          endingOnes +
-          quarters +
-          dimes +
-          nickels +
-          pennies;
-        ending_total = ending_total.toFixed(2);
-        setEndingTotal(ending_total);
-
-        console.log(ending);
-        console.log(endingTotal);
-      }
-    }
-
-    setAddClass(true);
-    setTimeout(() => {
-      setAddClass(false);
-    }, 1000);
-
-    getValues();
-  };
 
   return (
     <form id="bills-form">
       <div class="bills">
         <div class="left-bills">
-          <DenominationInput
-            label={"$100"}
-            id={"hundreds"}
-            denomination={100}
-            value={inputs.hundreds}
-            onChange={(e) => setInputs({ ...inputs, hundreds: e.target.value })}
-          />
-          <DenominationInput label={"$50"} id={"fifties"} denomination={50} value={inputs.fifties} onChange={(e) => setInputs({ ...inputs, fifties: e.target.value })}/>
-          <DenominationInput label={"$20"} id={"twenties"} denomination={20} value={inputs.twenties}onChange={(e) => setInputs({ ...inputs, twenties: e.target.value })}/>
-          <DenominationInput label={"$10"} id={"tens"} denomination={10} value={inputs.tens}onChange={(e) => setInputs({ ...inputs, tens: e.target.value })}/>
-          <DenominationInput label={"$5"} id={"fives"} denomination={5} value={inputs.fives}onChange={(e) => setInputs({ ...inputs, fives: e.target.value })}/>
-          <DenominationInput label={"$1"} id={"ones"} denomination={1} value={inputs.ones}onChange={(e) => setInputs({ ...inputs, ones: e.target.value })}/>
-          <DenominationInput
-            label={"25¢"}
-            id={"quarters"}
-            denomination={0.25} 
-            value={inputs.quarters}onChange={(e) => setInputs({ ...inputs, quarters: e.target.value })}
-          />
-          <DenominationInput label={"10¢"} id={"dimes"} denomination={0.1} value={inputs.dimes} onChange={(e) => setInputs({ ...inputs, dimes: e.target.value })}/>
-          <DenominationInput label={"5¢"} id={"nickels"} denomination={0.05} value={inputs.nickels}onChange={(e) => setInputs({ ...inputs, nickels: e.target.value })}/>
-          <DenominationInput label={"1¢"} id={"pennies"} denomination={0.01} value={inputs.pennies}onChange={(e) => setInputs({ ...inputs, pennies: e.target.value })}/>
+          <DenominationInput label={'$100'} name={"hundreds"} id={"hundreds"} value={inputs.hundreds} onChange={handleChange} error={errors.hundreds}/> 
+          <DenominationInput label={'$50'} name={"fifties"} id={"fifties"} value={inputs.fifties} onChange={handleChange} error={errors.fifties}/> 
+          <DenominationInput label={'$20'} name={"twenties"} id={"twenties"} value={inputs.twenties} onChange={handleChange} error={errors.twenties}/> 
+          <DenominationInput label={'$10'} name={"tens"} id={"tens"} value={inputs.tens} onChange={handleChange} error={errors.tens}/> 
+          <DenominationInput label={'$5'} name={"fives"} id={"fives"} value={inputs.fives} onChange={handleChange} error={errors.fives}/> 
+          <DenominationInput label={'$1'} name={"ones"} id={"ones"} value={inputs.ones} onChange={handleChange} error={errors.ones}/>
+          <DenominationInput label={'25¢'} name={"quarters"} id={"quarters"} value={inputs.quarters} onChange={handleChange} error={errors.quarters}/>
+          <DenominationInput label={'10¢'} name={"dimes"} id={"dimes"} value={inputs.dimes} onChange={handleChange} error={errors.dimes}/>
+          <DenominationInput label={'5¢'} name={"nickels"} id={"nickels"} value={inputs.nickels} onChange={handleChange} error={errors.nickels}/>
+          <DenominationInput label={'1¢'} name={"pennies"} id={"pennies"} value={inputs.pennies} onChange={handleChange} error={errors.pennies}/>
         </div>
-
+         
         <div class="right-bills">
-          <DenominationInput label={"Base Till $"} id={"base"} value={inputs.base} onChange={(e) => setInputs({ ...inputs, base: e.target.value })}/>
-          <BillList
-            handleSubmit={handleSubmit}
-            values={ending}
-            deposit={deposit}
-            total={total}
-            endingTotal={endingTotal}
-            depositTotal={depositTotal}
-            addClass={addClass}
-          />
-          <div class="setting">
-            <Switch isOn={value} handleToggle={() => setValue(!value)} />
-            <p class="switch-text">toggle to input number of bills</p>
-          </div>
+            <BillList inputs={inputs} spin={spin} setSpin={setSpin} depositArray={depositArray} endingTill={endingTill} />
         </div>
       </div>
     </form>
-  );
+    
+  )
 }
 
 export default InputForm;

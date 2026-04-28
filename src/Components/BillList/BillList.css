@@ -1,31 +1,23 @@
 .bill-list {
   background-color: green;
   border-radius: 15px;
-  width: 200px;
-  height: 580px;
+  width: 180px;
+  height: 700px;
   position: relative;
   padding: 15px;
-  padding-bottom: 35px;
 }
 .top {
-  margin-bottom: 20px;
+  margin-bottom: 70px;
 }
-
-.right-bills > .input-field > label {
-  width: 80px;
-}
-.right-bills > .input-field {
-  width: 200px;
-}
-
 #refresh {
   position: absolute;
-  top: -2px;
+  top: -5px;
   left: -10px;
   rotate: 95deg;
   color: black;
   z-index: 10;
   font-size: 30px;
+  cursor: pointer;
 }
 
 #white {
@@ -33,6 +25,7 @@
 }
 
 .bill-list h5 {
+  font-size: 16px;
   color: black;
   margin: 3px 0 3px 0;
   padding-left: 25px;
@@ -48,49 +41,24 @@
   position: absolute;
   left: 40px;
   width: 3px;
-  height: 157px;
+  height: 160px;
+  background-color: black;
+}
+.line2 {
+  position: absolute;
+  left: 40px;
+  width: 3px;
+  height: 265px;
   background-color: black;
 }
 
-.right-bills > .bill-list > .bottom > .line {
-  height: 265px;
+
+@keyframes spin-once {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
-.fa-refresh:hover{
-  cursor: pointer;
-}
 
-.value {
-  display: inline-block;
-  width: 20px;
-}
-
-.label {
-  margin-left: 18px;
-}
-
-@media screen and (max-width: 550px) {
-  .bill-list p {
-    font-size: 16px;
-  }
-}
-
-@media screen and (max-width: 400px) {
-  .bill-list h5 {
-    color: black;
-    margin: 3px 0 3px 0;
-    padding-left: 10px;
-  }
-
-  .bill-list p {
-    margin: 3px 0 3px 0;
-    padding-left: 30px;
-  }
-  .line {
-    position: absolute;
-    left: 25px;
-    width: 3px;
-    height: 157px;
-    background-color: black;
-  }
+.spin-once {
+  animation: spin-once 1s ease-in-out;
 }

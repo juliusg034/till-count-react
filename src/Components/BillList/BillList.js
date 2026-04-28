@@ -1,36 +1,40 @@
 import './BillList.css';
+import React, { useState } from "react";
+import * as calc from "../InputForm/calc.js";
 
-function BillList ({ handleSubmit, values, deposit, total, endingTotal, depositTotal, addClass }) {
+function BillList ({ inputs, spin, setSpin, depositArray, endingTill }) {
 
+
+  let sum = calc.getTotal(inputs);
 
   return (
     <div class="bill-list">
       <div class="top">
-        <i id="refresh"  className={`fa fa-refresh ${addClass ? 'fa-spin': ''}`} onClick={handleSubmit} ></i>
-        <h5 id="white">Total = {total}</h5>
-        <h5>Deposit = {depositTotal}</h5>
+        <i id="refresh" class="fa fa-refresh" className={spin ? "spin-once fa fa-refresh" : "fa fa-refresh"} onClick={() => setSpin(true)} onAnimationEnd={() => setSpin(false)}></i>
+        <h5 id="white">Total = ${sum.toFixed(2)}</h5>
+        <h5>Deposit = ${depositArray.total}</h5>
         <div class="line"></div>
-        <p>{deposit[100]} x $100</p>
-        <p>{deposit[50]} x $50</p>
-        <p>{deposit[20]} x $20</p>
-        <p>{deposit[10]} x $10</p>
-        <p>{deposit[5]} x $5</p>
-        <p>{deposit[1]} x $1</p>
+        <p>{depositArray.bills.hundreds} x $100</p>
+        <p>{depositArray.bills.fifties} x $50</p>
+        <p>{depositArray.bills.twenties} x $20</p>
+        <p>{depositArray.bills.tens} x $10</p>
+        <p>{depositArray.bills.fives} x $5</p>
+        <p>{depositArray.bills.ones} x $1</p>
       </div>
       <div class="bottom">
         <h5 id="white">Ending Till</h5>
-        <h5>Total = {endingTotal}</h5>
-        <div class="line"></div>
-        <p><span class="value">{values[100]*100}</span> <span class="label">in $100</span></p>
-        <p><span class="value">{values[50]*50}</span> <span class="label">in $50</span></p>
-        <p><span class="value">{values[20]*20}</span> <span class="label">in $20</span></p>
-        <p><span class="value">{values[10]*10}</span> <span class="label">in $10</span></p>
-        <p><span class="value">{values[5]*5}</span> <span class="label">in $5</span></p>
-        <p><span class="value">{values[1]}</span> <span class="label">in $1</span></p>
-        <p><span class="value">{values[0.25]}</span> <span class="label">in 25¢</span></p>
-        <p><span class="value">{values[0.10]}</span> <span class="label">in 10¢</span></p>
-        <p><span class="value">{values[0.05]}</span> <span class="label">in 5¢</span></p>
-        <p><span class="value">{values[0.01]}</span> <span class="label">in 1¢</span></p>
+        <h5>Total = ${endingTill.total}</h5>
+        <div class="line2"></div>
+        <p>{endingTill.bills.hundreds} x $100</p>
+        <p>{endingTill.bills.fifties} x $50</p>
+        <p>{endingTill.bills.twenties} x $20</p>
+        <p>{endingTill.bills.tens} x $10</p>
+        <p>{endingTill.bills.fives} x $5</p>
+        <p>{endingTill.bills.ones} x $1</p>
+        <p>{inputs.quarters} in $0.25</p>
+        <p>{inputs.dimes} in $0.10</p>
+        <p>{inputs.nickels} in $0.05</p>
+        <p>{inputs.pennies} in $0.01</p>
       </div>
     </div>
   )
