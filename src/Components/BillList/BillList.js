@@ -1,11 +1,16 @@
 import './BillList.css';
+import React, { useState } from "react";
 
 function BillList () {
+
+  const [spin, setSpin] = useState(false);
+
+
 
   return (
     <div class="bill-list">
       <div class="top">
-        <i id="refresh" class="fa fa-refresh"></i>
+        <i id="refresh" class="fa fa-refresh" className={spin ? "spin-once fa fa-refresh" : "fa fa-refresh"} onClick={() => setSpin(true)} onAnimationEnd={() => setSpin(false)}></i>
         <h5 id="white">Total = $$$</h5>
         <h5>Deposit = $$$</h5>
         <div class="line"></div>
