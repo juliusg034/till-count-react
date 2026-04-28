@@ -17,7 +17,6 @@ function App() {
 
       <InputForm/>
       
-      <Switch isOn={value} handleToggle={() => setValue(!value)}/> 
     </div>
   );
 }
