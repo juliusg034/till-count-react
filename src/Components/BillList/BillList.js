@@ -19,7 +19,7 @@ function BillList () {
       <div class="bottom">
         <h5 id="white">Ending Till</h5>
         <h5>Total = $$$</h5>
-        <div class="line"></div>
+        <div class="line2"></div>
         <p>0 x $100</p>
         <p>0 x $50</p>
         <p>0 x $20</p>
