@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/till-count-react/static/css/main.450d8c0a.css",
-    "main.js": "/till-count-react/static/js/main.8b2696c2.js",
+    "main.js": "/till-count-react/static/js/main.8f8ccf9d.js",
     "index.html": "/till-count-react/index.html",
     "main.450d8c0a.css.map": "/till-count-react/static/css/main.450d8c0a.css.map",
-    "main.8b2696c2.js.map": "/till-count-react/static/js/main.8b2696c2.js.map"
+    "main.8f8ccf9d.js.map": "/till-count-react/static/js/main.8f8ccf9d.js.map"
   },
   "entrypoints": [
     "static/css/main.450d8c0a.css",
-    "static/js/main.8b2696c2.js"
+    "static/js/main.8f8ccf9d.js"
   ]
 }
