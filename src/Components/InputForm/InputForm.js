@@ -128,12 +128,12 @@ function InputForm () {
   }
 
   // Save inputs to localStorage whenever they change
-  useEffect((inputs) => {
+  useEffect(() => {
     localStorage.setItem("inputs", JSON.stringify(inputs));
   }, [inputs]);
 
 
-  useEffect((spin) => {
+  useEffect(() => {
     if (spin) {
       // do something when spin is true, e.g. refresh data
       const sum = calc.getTotal(inputs);
