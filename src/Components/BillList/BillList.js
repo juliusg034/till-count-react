@@ -1,11 +1,23 @@
 import './BillList.css';
 import React, { useState } from "react";
 import * as calc from "../InputForm/calc.js";
+import html2canvas from "html2canvas";
 
 function BillList ({ inputs, spin, setSpin, depositArray, endingTill }) {
 
 
   let sum = calc.getTotal(inputs);
+  function downloadScreenshot() {
+  const element = document.getElementById("screenshot-target");
+
+  html2canvas(element).then((canvas) => {
+    console.log("Canvas generated:", canvas);
+    const link = document.createElement("a");
+    link.download = `till-count-${new Date().toISOString().slice(0, 10)}.png`;
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+  });
+}
 
   return (
     <div class="bill-list">
@@ -36,6 +48,10 @@ function BillList ({ inputs, spin, setSpin, depositArray, endingTill }) {
         <p>{inputs.nickels} in $0.05</p>
         <p>{inputs.pennies} in $0.01</p>
       </div>
+      <p id="timestamp">Time Stamp: {new Date().toLocaleDateString()}</p>
+      <button type="button" id="download-btn" onClick={downloadScreenshot}>
+        Download Screenshot
+      </button>
     </div>
   )
 

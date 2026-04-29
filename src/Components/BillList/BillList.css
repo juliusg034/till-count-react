@@ -64,7 +64,26 @@
   animation: spin-once 1s ease-in-out;
 }
 
+#timestamp {
+  position: absolute;
+  bottom: 10px;
+  left: -10px;
+  color: black;
+  font-size: 14px;
+  font-weight: bold;
+}
 
+
+#download-btn {
+  margin-left: 10px;
+  margin-top: 20px;
+  padding: 7px;
+  background-color: black;
+  color: white;
+  border-radius: 10px;
+  align-items: center;
+  font-size: 12px;
+}
 
 @media (max-width: 600px) {
   .bill-list {

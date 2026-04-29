@@ -3,7 +3,7 @@ import BillList from "../BillList/BillList.js";
 import './InputForm.css';
 import React, { useState , useEffect} from "react";
 import * as calc from "./calc.js";
-
+import html2canvas from "html2canvas";
 
 
 
@@ -32,9 +32,20 @@ function InputForm () {
 
   if (!saved) return defaultInputs;
 
-  const parsed = JSON.parse(saved);
+  let parsed;
 
-  // 🔥 One-time fix: remove old key if it exists
+  try {
+    parsed = JSON.parse(saved);
+  } catch (e) {
+    console.error("Invalid JSON in localStorage:", saved);
+
+    // 🔥 remove corrupted data
+    localStorage.removeItem("inputs");
+
+    return defaultInputs;
+  }
+
+  // 🔥 One-time fix: remove old key
   if ("base" in parsed) {
     delete parsed.base;
     localStorage.setItem("inputs", JSON.stringify(parsed));
@@ -42,6 +53,7 @@ function InputForm () {
 
   return parsed;
 });
+  
   const [depositArray, setDeposit] = useState({
     total: "$$$",
     bills: {
@@ -116,12 +128,12 @@ function InputForm () {
   }
 
   // Save inputs to localStorage whenever they change
-  useEffect(() => {
+  useEffect((inputs) => {
     localStorage.setItem("inputs", JSON.stringify(inputs));
   }, [inputs]);
 
 
-  useEffect(() => {
+  useEffect((spin) => {
     if (spin) {
       // do something when spin is true, e.g. refresh data
       const sum = calc.getTotal(inputs);
@@ -134,6 +146,7 @@ function InputForm () {
     }
   }, [spin]);
 
+  
 
 
 
@@ -154,7 +167,7 @@ function InputForm () {
           <DenominationInput label={'1¢'} name={"pennies"} id={"pennies"} value={inputs.pennies} onChange={handleChange} error={errors.pennies}/>
         </div>
          
-        <div class="right-bills">
+        <div class="right-bills" id="screenshot-target">
             <BillList inputs={inputs} spin={spin} setSpin={setSpin} depositArray={depositArray} endingTill={endingTill} />
         </div>
       </div>
